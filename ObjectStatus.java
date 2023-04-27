@@ -5,6 +5,7 @@ package com.streetfightergame.game;
  */
 public enum ObjectStatus {
     Idle,
+    Walking,
     Running,
     Attack,
     Hurt,

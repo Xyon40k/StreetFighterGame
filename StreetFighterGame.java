@@ -38,11 +38,6 @@ public class StreetFighterGame extends ApplicationAdapter {
 	}
 
 	/**
-	 * Quanto camminano
-	 */
-	private int runValue = 13;
-
-	/**
 	 * Gestice l'input della tastiera.
 	 */
 	private void handleInput() {
@@ -51,26 +46,73 @@ public class StreetFighterGame extends ApplicationAdapter {
 		 */
 		boolean a = Gdx.input.isKeyPressed(Keys.A);
 		boolean d = Gdx.input.isKeyPressed(Keys.D);
+		boolean w = Gdx.input.isKeyPressed(Keys.W);
 		//boolean s = Gdx.input.isKeyPressed(Keys.S);
-		//boolean w = Gdx.input.isKeyPressed(Keys.W);
-		boolean n6 = Gdx.input.isKeyPressed(Keys.NUMPAD_6);
-		boolean n4 = Gdx.input.isKeyPressed(Keys.NUMPAD_4);
+		boolean corsa1 = Gdx.input.isKeyPressed(Keys.SHIFT_LEFT);
 
+		boolean l = Gdx.input.isKeyPressed(Keys.L);
+		boolean j = Gdx.input.isKeyPressed(Keys.J);
+		boolean i = Gdx.input.isKeyPressed(Keys.I);
+		//boolean k = Gdx.input.isKeyPressed(Keys.K); //"socco"
+		boolean corsa2 = Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT);
+		
 		boolean attack1 = Gdx.input.isKeyPressed(Keys.SPACE) && player1.getStatus() != ObjectStatus.Attack;
 		boolean attack2 = Gdx.input.isKeyPressed(Keys.NUMPAD_0) && player2.getStatus() != ObjectStatus.Attack;
 		boolean specialAttack1 = Gdx.input.isKeyPressed(Keys.R) && player1.getStatus() != ObjectStatus.Attack;
-
+		
 		if(d){
-			player1.setPosition(player1.getX()+runValue, player1.getY()); //player1 va a destra
+			player1.setPosition(player1.getX()+Settings.runValue, player1.getY()); //player1 va a destra
+			if(corsa1){
+				player1.setPosition(player1.getX()+Settings.accelerazioneCorsa, player1.getY()); //player1 sta correndo
+				if(player1.getStatus() != ObjectStatus.Running){
+					player1.setStatus(ObjectStatus.Running); //Setto lo status a running
+				}
+			}
+			else if(player1.getStatus() != ObjectStatus.Walking){
+				player1.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
+			}
 		}
 		if(a){
-			player1.setPosition(player1.getX()-runValue, player1.getY()); //player1 va a sinistra
+			player1.setPosition(player1.getX()-Settings.runValue, player1.getY()); //player1 va a sinistra
+			if(corsa1){
+				player1.setPosition(player1.getX()-Settings.accelerazioneCorsa, player1.getY()); //player1 sta correndo
+				if(player1.getStatus() != ObjectStatus.Running){
+					player1.setStatus(ObjectStatus.Running); //Setto lo status a running
+				}
+			}
+			else if(player1.getStatus() != ObjectStatus.Walking){
+				player1.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
+			}
 		}
-		if(n6){
-			player2.setPosition(player2.getX()+runValue, player2.getY()); //player2 va a destra (il tasto è il 6 del tastierno numerico)
+		if(w){
+			player1.jump();
 		}
-		if(n4){
-			player2.setPosition(player2.getX()-runValue, player2.getY());//player2 va a sinistra (il tasto è il 4 del tastierno numerico)
+		if(l){
+			player2.setPosition(player2.getX()+Settings.runValue, player2.getY()); //player2 va a destra (il tasto è il 6 del tastierno numerico)
+			if(corsa2){
+				player2.setPosition(player2.getX()+Settings.accelerazioneCorsa, player2.getY()); //player1 sta correndo
+				if(player2.getStatus() != ObjectStatus.Running){
+					player2.setStatus(ObjectStatus.Running); //Setto lo status a running
+				}
+			}
+			else if(player2.getStatus() != ObjectStatus.Walking){
+				player2.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
+			}
+		}
+		if(j){
+			player2.setPosition(player2.getX()-Settings.runValue, player2.getY());//player2 va a sinistra (il tasto è il 4 del tastierno numerico)
+			if(corsa2){
+				player2.setPosition(player2.getX()-Settings.accelerazioneCorsa, player2.getY()); //player1 sta correndo
+				if(player2.getStatus() != ObjectStatus.Running){
+					player2.setStatus(ObjectStatus.Running); //Setto lo status a running
+				}
+			}
+			else if(player2.getStatus() != ObjectStatus.Walking){
+				player2.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
+			}
+		}
+		if(i){
+			player2.jump();
 		}
 		if(attack1){ // Il player1 attacca con la barra spaziatrice
 			player1.attack(player2); //player1 attacca player2

@@ -32,9 +32,9 @@ public class AnimatorLoader {
     }
 
     /**
-     * Variabile per trovare la cartella globale degli asset:
+     * Variabile per trovare la cartella globale degli asset (bruh può variare da IDE a IDE. Fixate gli errori printando la cartella, linea 47):
      */
-    private static String assetPath = Gdx.files.getLocalStoragePath();
+    private static String assetPath = Gdx.files.getLocalStoragePath() + "\\assets\\";
 
     /**
      * Questo metodo serve per creare una animazione partendo da una lista di immagini. Vedi esempio: asset/Idle1
@@ -44,6 +44,7 @@ public class AnimatorLoader {
     public static TextureRegion[] loadListofImages(String folderPath){
         String path = assetPath + folderPath; //Ottento la directory dove sono contenute tutte le immagini
         File folder = new File(path); //Creo l'oggetto File
+        //System.out.println(path); //Da fare in caso di alcuni errori.
         File[] listOfFiles = folder.listFiles(); //Ottengo un array di File con tutti i File contenuti in quella cartella
         TextureRegion[] walkFrames = new TextureRegion[listOfFiles.length]; //Creo un array di TextureRegion lungo tanto quanti sono i File nella cartella
         for (int i = 0; i < walkFrames.length; i++) {

@@ -10,7 +10,7 @@ public class Animator {
     private float timing; //Tempo di aggiornamento della animazione.
     private boolean isLoop; //Booleano per vedere se la animazione deve andare in loop (tipo Idle o Running) oppure si deve fermare alla fine (tipo Attack, Hurt, Dying).
     private int animationLength; //Intero per capire se si è all'ultimo frame della animazione.
-
+    private TextureRegion[] tmpTextureRegion;
     private ObjectStatus name;
     /**
      * Classe Animator. Serve per le animazioni di ogni personaggio / oggetto
@@ -22,6 +22,7 @@ public class Animator {
         this.name = name;
         this.timing = timing;
         this.isLoop = isLoop;
+        this.tmpTextureRegion = textureRegions;
         animationType = new Animation<TextureRegion>(timing, textureRegions);
         this.animationLength = textureRegions.length;
     }
@@ -72,4 +73,5 @@ public class Animator {
      * @return booleano isLoop.
      */
     public boolean isLoop(){return isLoop;}
+
 }
