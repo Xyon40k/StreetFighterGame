@@ -20,7 +20,7 @@ public abstract class Player extends SpriteObject {
     private Animator hurt;
     protected Animator taunt;
     private Animator walking;
-    protected HealthManager health;
+    protected HealthBar health;
     private float oldx;
     private int remainingIFrames;
     private float[] pos;
@@ -45,7 +45,7 @@ public abstract class Player extends SpriteObject {
          * Qua creo tutte le animazioni che servono al Player "generico", quindi:
          * -Idle / Run / Attack / Hurt / Dying
          */
-        this.idle = new Animator(AnimatorLoader.loadListofImages(folder + "\\" + Settings.idlePath), 0.08f, true, ObjectStatus.Idle);
+        this.idle = new Animator(AnimatorLoader.loadListofImages(folder + "\\" + Settings.idlePath), 0.5f, true, ObjectStatus.Idle);
         this.walking = new Animator(AnimatorLoader.loadListofImages(folder + "\\" + Settings.walkPath), 0.06f, true, ObjectStatus.Walking);
         this.running = new Animator(AnimatorLoader.loadListofImages(folder + "\\" + Settings.walkPath), 0.03f, true, ObjectStatus.Running);
         this.attack = new Animator(AnimatorLoader.loadListofImages(folder + "\\" + Settings.attackPath), 0.1f, false, ObjectStatus.Attack);
@@ -66,9 +66,9 @@ public abstract class Player extends SpriteObject {
             return; //Se il personaggio è morto oppure la salute è nulla, ritorno.
         }
 
-        this.health.displayHeart(); //Aggiorno il valore e counter dei cuori sullo schermo.
+        this.health.display(); //Aggiorno il valore e counter dei cuori sullo schermo.
 
-        if(health.getCurrentHeart() <= 0){ //Se i cuori sono uguali o minori a 0, il player è morto.
+        if(health.getHealth() <= 0){ //Se i cuori sono uguali o minori a 0, il player è morto.
             updateAnimator(this.dying); //Quindi carico la animazione dying.
         }
 
@@ -81,7 +81,7 @@ public abstract class Player extends SpriteObject {
             if(status == ObjectStatus.Walking && this.animator.getStatus() != ObjectStatus.Walking){
                 updateAnimator(walking); //carico l'animazione di walking
             }
-            if(status == ObjectStatus.Running && this.animator.getStatus() != ObjectStatus.Running){ //Sta correndo
+            if(status == ObjectStatus.Running && this.animator.getStatus() != ObjectStatus.Running && this.status != ObjectStatus.Attack){ //Sta correndo
                 updateAnimator(running); //carico l'animazione di running
             }
         }
@@ -117,6 +117,9 @@ public abstract class Player extends SpriteObject {
             yVel = 0;
         }
         this.player.setPosition(pos[0], pos[1]);
+        if(getClass() == Golem.class){
+            System.out.println(this.status);
+        }
     }
 
     /**
@@ -149,7 +152,7 @@ public abstract class Player extends SpriteObject {
      */
     public void damage(){
         if(remainingIFrames == 0) {
-            getHealthManager().removeHeart();
+            getHealthManager().changeHealth(-10);
             remainingIFrames = Settings.iFramePerAttack;
         }
     }
@@ -158,7 +161,7 @@ public abstract class Player extends SpriteObject {
      * Ritorna l'HealthManager della classe
      * @return HealtManager
      */
-    public HealthManager getHealthManager(){return this.health;}
+    public HealthBar getHealthManager(){return this.health;}
 
     /**
      * Ritorna l'ObjectStatus attuale del player

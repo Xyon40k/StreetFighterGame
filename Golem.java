@@ -12,7 +12,7 @@ public class Golem extends Player{
      */
     public Golem(int defaultX, int defaultY, String pathToAsset, SpriteBatch batch){
         super(defaultX, defaultY, pathToAsset, batch, Settings.golemPath); // Chiamo la superclasse
-        this.health = new HealthManager("health.png", 4, batch, defaultX, 800); //Creo un determinato tipo di HealtManager (meno cuori rispetto al Wraith e coordinate diverse ovviamente)
+        this.health = new HealthBar(40, batch, 10, 800); //Creo un determinato tipo di HealtManager (meno cuori rispetto al Wraith e coordinate diverse ovviamente)
         //Creo l'Animator Kick (Questo tipo di Animator è disponibile solo per il Golem (25/04/2023 16:14) dato che è un assets disponibile solo nel pacchetto dei Golem
         this.specialAttack = new Animator(AnimatorLoader.loadListofImages(Settings.golemPath + "\\" + Settings.superAttackPath), 0.06f, false, ObjectStatus.Attack); //Creo l'Animator e dichiaro il suo ObjectStatus in Attack
     }

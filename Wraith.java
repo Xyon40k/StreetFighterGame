@@ -13,7 +13,7 @@ public class Wraith extends Player{
      */
     public Wraith(int defaultX, int defaultY, String pathToAsset, SpriteBatch batch){
         super(defaultX, defaultY, pathToAsset, batch, Settings.wraithPath); //Chiamo la super classe
-        this.health = new HealthManager("health.png", 10, batch, defaultX, 800); //Creo un determinato tipo di HealtManager
+        this.health = new HealthBar(100, batch, 1300, 800); //Creo un determinato tipo di HealtManager
         //Creo l'Animator Taunt (Questo tipo di Animator è disponibile solo per il Wraith (25/04/2023 16:24) dato che è un assets disponibile solo nel pacchetto dei Wraith
         this.taunt =new Animator(AnimatorLoader.loadListofImages(Settings.wraithPath + "\\" + Settings.tauntPath), 0.06f, false, ObjectStatus.Taunt);
     }

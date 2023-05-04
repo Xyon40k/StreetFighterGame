@@ -34,8 +34,8 @@ public class AnimatorLoader {
     /**
      * Variabile per trovare la cartella globale degli asset (bruh può variare da IDE a IDE. Fixate gli errori printando la cartella, linea 47):
      */
-    private static String assetPath = Gdx.files.getLocalStoragePath() + "\\assets\\";
-
+    private static String assetPath = Gdx.files.getLocalStoragePath() + "\\assets\\"; //Path se usi Visual Studio Code
+    //private static String assetPath = Gdx.files.getLocalStoragePath(); //Path se usi Intellij IDEA Ultimate
     /**
      * Questo metodo serve per creare una animazione partendo da una lista di immagini. Vedi esempio: asset/Idle1
      * @param folderPath path per la directory contenuta nella cartella asset. Esempio: "idle1". Non serve mettere alcuno slash oppure backslash.

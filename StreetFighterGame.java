@@ -1,6 +1,7 @@
 package com.streetfightergame.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -13,14 +14,19 @@ public class StreetFighterGame extends ApplicationAdapter {
 	private Golem player1; //player1
 	private Wraith player2; //player2
 
+	private Sound a;
+
 	@Override
 	public void create () {
+		a = Gdx.audio.newSound(Gdx.files.internal("output.mp3"));
+		a.play(0.5f);      // plays the sound a second time, this is treated as a different instance
 		batch = new SpriteBatch(); //Creo un nuovo SpriteBatch
 		image = new Texture("Background\\Background.png"); // Creo lo sfondo.
 		player1 = new Golem(10, 10, "Golem1\\Golem1.png", this.batch); //Creo un oggetto Player (parte sinistra dello schermo) e lo chiamo player1
 		player2 = new Wraith(1300, 10, "Wraith1\\Wraith1.png", this.batch); // Creo un secondo oggetto Player (parte destra dello schermo e lo chiamo player2
 	}
 
+	
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
@@ -55,36 +61,34 @@ public class StreetFighterGame extends ApplicationAdapter {
 		boolean i = Gdx.input.isKeyPressed(Keys.I);
 		//boolean k = Gdx.input.isKeyPressed(Keys.K); //"socco"
 		boolean corsa2 = Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT);
-		
+
 		boolean attack1 = Gdx.input.isKeyPressed(Keys.SPACE) && player1.getStatus() != ObjectStatus.Attack;
 		boolean attack2 = Gdx.input.isKeyPressed(Keys.NUMPAD_0) && player2.getStatus() != ObjectStatus.Attack;
 		boolean specialAttack1 = Gdx.input.isKeyPressed(Keys.R) && player1.getStatus() != ObjectStatus.Attack;
-		
-		if(d){
+
+		if(d&&!attack1){
 			player1.setPosition(player1.getX()+Settings.runValue, player1.getY()); //player1 va a destra
 			if(corsa1){
 				player1.setPosition(player1.getX()+Settings.accelerazioneCorsa, player1.getY()); //player1 sta correndo
 				if(player1.getStatus() != ObjectStatus.Running){
 					player1.setStatus(ObjectStatus.Running); //Setto lo status a running
 				}
-			}
-			else if(player1.getStatus() != ObjectStatus.Walking){
+			} else if(player1.getStatus() != ObjectStatus.Walking){
 				player1.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
 			}
 		}
-		if(a){
+		if(a&&!attack1){
 			player1.setPosition(player1.getX()-Settings.runValue, player1.getY()); //player1 va a sinistra
 			if(corsa1){
 				player1.setPosition(player1.getX()-Settings.accelerazioneCorsa, player1.getY()); //player1 sta correndo
 				if(player1.getStatus() != ObjectStatus.Running){
 					player1.setStatus(ObjectStatus.Running); //Setto lo status a running
 				}
-			}
-			else if(player1.getStatus() != ObjectStatus.Walking){
+			} else if(player1.getStatus() != ObjectStatus.Walking){
 				player1.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
 			}
 		}
-		if(w){
+		if(w&&!(attack1)){
 			player1.jump();
 		}
 		if(l){
@@ -94,8 +98,7 @@ public class StreetFighterGame extends ApplicationAdapter {
 				if(player2.getStatus() != ObjectStatus.Running){
 					player2.setStatus(ObjectStatus.Running); //Setto lo status a running
 				}
-			}
-			else if(player2.getStatus() != ObjectStatus.Walking){
+			} else if(player2.getStatus() != ObjectStatus.Walking){
 				player2.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
 			}
 		}
@@ -106,8 +109,7 @@ public class StreetFighterGame extends ApplicationAdapter {
 				if(player2.getStatus() != ObjectStatus.Running){
 					player2.setStatus(ObjectStatus.Running); //Setto lo status a running
 				}
-			}
-			else if(player2.getStatus() != ObjectStatus.Walking){
+			} else if(player2.getStatus() != ObjectStatus.Walking){
 				player2.setStatus(ObjectStatus.Walking); //Sennò setto lo status a walking
 			}
 		}
